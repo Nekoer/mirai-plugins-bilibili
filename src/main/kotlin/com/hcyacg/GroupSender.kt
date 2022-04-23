@@ -116,6 +116,9 @@ object GroupSender {
     }
 
     suspend fun GroupSender.sendMessage(biliBiliLive: BiliBiliLive) {
+        if (biliBiliLive.data == null) {
+            return
+        }
         val imageList = mutableListOf<String>()
         Bot.instances.forEach { bot ->
 
@@ -303,6 +306,9 @@ object GroupSender {
 
         //转发
         if (biliBiliDynamic.data?.cards?.get(0)?.desc?.type == 1) {
+            if (!Setting.enable.forward) {
+                return
+            }
             val biliBiliForWard = JSON.parseObject(
                 JSONObject.parseObject(biliBiliDynamic.data.cards[0].card).toString(),
                 BiliBiliForWard::class.java
@@ -317,6 +323,9 @@ object GroupSender {
 
         //视频
         if (biliBiliDynamic.data?.cards?.get(0)?.desc?.type == 8) {
+            if (!Setting.enable.video) {
+                return
+            }
             val biliBiliVideoCard = JSON.parseObject(
                 JSONObject.parseObject(biliBiliDynamic.data.cards[0].card).toString(),
                 BiliBiliVideoCard::class.java
@@ -326,6 +335,9 @@ object GroupSender {
         }
         //专栏
         if (biliBiliDynamic.data?.cards?.get(0)?.desc?.type == 64) {
+            if (!Setting.enable.article) {
+                return
+            }
             val biliBiliArticle = JSON.parseObject(
                 JSONObject.parseObject(biliBiliDynamic.data.cards[0].card).toString(),
                 Article::class.java
@@ -336,6 +348,10 @@ object GroupSender {
 
         //文本 | 文本+图片
         if (biliBiliDynamic.data?.cards?.get(0)?.desc?.type == 4 || biliBiliDynamic.data?.cards?.get(0)?.desc?.type == 2) {
+            if (!Setting.enable.dynamic) {
+                return
+            }
+
             val biliBiliDynamicItem = JSON.parseObject(
                 JSONObject.parseObject(biliBiliDynamic.data.cards[0].card).toString(),
                 BiliBiliDynamicItem::class.java

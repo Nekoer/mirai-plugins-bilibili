@@ -35,6 +35,7 @@ object BiliBili : KotlinPlugin(
         Data.save()
         Data.reload()
 
+        logger.info("检查到B站 文字动态：${Setting.enable.dynamic} 转发动态：${Setting.enable.forward} 直播监控：${Setting.enable.live} 专栏动态：${Setting.enable.article} 视频动态：${Setting.enable.video}")
         BiliBiliCenter.load()
 
         logger.info { "$name 已加载" }

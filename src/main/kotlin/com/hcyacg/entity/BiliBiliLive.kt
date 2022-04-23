@@ -7,7 +7,7 @@ data class BiliBiliLive(
     @JSONField(name = "code")
     val code: Int,
     @JSONField(name = "data")
-    val data: BLData,
+    val data: BLData?,
     @JSONField(name = "message")
     val message: String,
     @JSONField(name = "ttl")

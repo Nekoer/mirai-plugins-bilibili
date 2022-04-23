@@ -11,4 +11,7 @@ object Setting : AutoSavePluginConfig("Setting") {
 
     @ValueName("groups")
     val groups: List<Long> by value(listOf(123456))
+
+    @ValueName("enable")
+    val enable: Enable by value()
 }

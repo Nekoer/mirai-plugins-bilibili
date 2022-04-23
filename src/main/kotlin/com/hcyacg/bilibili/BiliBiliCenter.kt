@@ -50,6 +50,9 @@ object BiliBiliCenter {
                         )
                         val biliBiliLive = JSON.parseObject(result.toString(), BiliBiliLive::class.java)
 
+                        if (biliBiliLive.data == null) {
+                            return
+                        }
                         if (null == Data.live[up]) {
                             Data.live[up] = 0
                         }
@@ -148,8 +151,8 @@ object BiliBiliCenter {
             logger.info("正在统计监控列表")
             event.subject.sendMessage(At(event.sender).plus("正在统计监控列表"))
             val nodes = mutableListOf<ForwardMessage.Node>()
-            for (up in Setting.ups) {
 
+            Setting.ups.forEach here@{ up ->
                 val result = RequestUtil.requestObject(
                     Method.GET, "$bilibiliLiveV2${up}&jsonp=jsonp",
                     requestBody, headers.build(),
@@ -157,6 +160,9 @@ object BiliBiliCenter {
                 )
                 val biliBiliLive = JSON.parseObject(result.toString(), BiliBiliLive::class.java)
 
+                if (biliBiliLive.data == null) {
+                    return@here
+                }
 
                 val toExternalResource =
                     ImageUtil.getImage(biliBiliLive.data.face).toByteArray().toExternalResource()
