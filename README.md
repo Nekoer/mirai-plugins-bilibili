@@ -16,4 +16,10 @@ ups:  #B站UP主
 groups:  #主动推送的群
   - 77708393
   - 960879198
+enable:  #推送开关
+  article: true #专栏
+  forward: true #转发
+  live: true #直播
+  video: true #视频
+  dynamic: true #普通动态
 ```
