@@ -47,7 +47,12 @@ object BiliBiliCenter {
                             Method.GET, "$bilibiliLiveV2${up}&jsonp=jsonp",
                             requestBody, headers.build(),
                             logger
-                        )
+                        ) ?: return
+
+                        if (result.getIntValue("code") != 0) {
+                            return
+                        }
+
                         val biliBiliLive = JSON.parseObject(result.toString(), BiliBiliLive::class.java)
 
                         if (biliBiliLive.data == null) {

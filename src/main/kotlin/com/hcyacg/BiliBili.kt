@@ -17,7 +17,7 @@ object BiliBili : KotlinPlugin(
     JvmPluginDescription(
         id = "com.hcyacg.bilibili",
         name = "B站推送插件",
-        version = "1.0",
+        version = "1.1.1",
     ) {
         author("Nekoer")
         info("""B站推送插件""")

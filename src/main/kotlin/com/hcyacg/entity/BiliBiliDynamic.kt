@@ -378,7 +378,7 @@ data class ShowTip(
 
 data class TopicInfo(
     @JSONField(name = "topic_details")
-    val topicDetails: List<TopicDetail> = listOf()
+    val topicDetails: List<TopicDetail>? = listOf()
 )
 
 data class EmojiDetail(
