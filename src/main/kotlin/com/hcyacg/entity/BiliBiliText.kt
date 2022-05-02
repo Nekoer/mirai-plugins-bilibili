@@ -1,6 +1,5 @@
 package com.hcyacg.entity
 
-import com.alibaba.fastjson.annotation.JSONField
 import kotlinx.serialization.Serializable
 
 import kotlinx.serialization.SerialName
