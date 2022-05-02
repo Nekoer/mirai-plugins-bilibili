@@ -20,7 +20,7 @@ object RequestUtil {
         body: RequestBody?,
         headers: Headers,
         logger: MiraiLogger
-    ): JSONObject? {
+    ): String? {
         /**
          * 进行请求转发
          */
@@ -42,44 +42,16 @@ object RequestUtil {
         }
     }
 
-    fun requestArray(
-        method: Method,
-        uri: String,
-        body: RequestBody?,
-        headers: Headers,
-        logger: MiraiLogger
-    ): JSONArray? {
-        /**
-         * 进行请求转发
-         */
-        when (method) {
-            Method.GET -> {
-                return httpArray(Request.Builder().url(uri).headers(headers).get().build(), logger)
-            }
-            Method.POST -> {
-                return body?.let { Request.Builder().url(uri).headers(headers).post(it).build() }
-                    ?.let { httpArray(it, logger) }
-            }
-            Method.PUT -> {
-                return body?.let { Request.Builder().url(uri).headers(headers).put(it).build() }
-                    ?.let { httpArray(it, logger) }
-            }
-            Method.DEL -> {
-                return httpArray(Request.Builder().url(uri).headers(headers).delete(body).build(), logger)
-            }
-        }
-
-    }
 
     /**
      * 发送http请求，返回数据（其中根据proxy是否配置加入代理机制）
      */
-    private fun httpObject(request: Request, logger: MiraiLogger): JSONObject? {
+    private fun httpObject(request: Request, logger: MiraiLogger): String? {
         val response: Response = client.build().newCall(request).execute()
 
         try {
             if (response.isSuccessful) {
-                return JSONObject.parseObject(response.body?.string())
+                return response.body?.string()
             }
             return null
         } catch (e: Exception) {
@@ -89,22 +61,6 @@ object RequestUtil {
             response.close()
         }
     }
-
-    private fun httpArray(request: Request, logger: MiraiLogger): JSONArray? {
-        val response: Response = client.build().newCall(request).execute()
-        try {
-            if (response.isSuccessful) {
-                return JSONArray.parseArray(response.body?.string())
-            }
-            return null
-        } catch (e: Exception) {
-            logger.error(e.message)
-            return null
-        } finally {
-            response.close()
-        }
-    }
-
 }
 
 /**

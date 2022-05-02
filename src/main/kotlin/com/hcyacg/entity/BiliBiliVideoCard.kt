@@ -1,127 +1,132 @@
 package com.hcyacg.entity
 
-import com.alibaba.fastjson.annotation.JSONField
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
 
-
+@Serializable
 data class BiliBiliVideoCard(
-    @JSONField(name = "aid")
-    val aid: Int?,
-    @JSONField(name = "attribute")
-    val attribute: Int?,
-    @JSONField(name = "cid")
-    val cid: Int?,
-    @JSONField(name = "copyright")
-    val copyright: Int?,
-    @JSONField(name = "ctime")
-    val ctime: Int?,
-    @JSONField(name = "desc")
-    val desc: String?,
-    @JSONField(name = "dimension")
-    val dimension: Dimension?,
-    @JSONField(name = "duration")
-    val duration: Int?,
-    @JSONField(name = "dynamic")
-    val `dynamic`: String?,
-    @JSONField(name = "first_frame")
-    val firstFrame: String?,
-    @JSONField(name = "jump_url")
-    val jumpUrl: String?,
-    @JSONField(name = "mission_id")
-    val missionId: Int?,
-    @JSONField(name = "owner")
-    val owner: Owner?,
-    @JSONField(name = "pic")
-    val pic: String?,
-    @JSONField(name = "player_info")
-    val playerInfo: Any?,
-    @JSONField(name = "pubdate")
-    val pubdate: Int?,
-    @JSONField(name = "rights")
-    val rights: Rights?,
-    @JSONField(name = "short_link")
-    val shortLink: String?,
-    @JSONField(name = "short_link_v2")
-    val shortLinkV2: String?,
-    @JSONField(name = "stat")
-    val stat: Stat?,
-    @JSONField(name = "state")
-    val state: Int?,
-    @JSONField(name = "tid")
-    val tid: Int?,
-    @JSONField(name = "title")
-    val title: String?,
-    @JSONField(name = "tname")
-    val tname: String?,
-    @JSONField(name = "videos")
-    val videos: Int?
+    @SerialName("aid")
+    val aid: Int? = 0,
+    @SerialName("attribute")
+    val attribute: Int? = 0,
+    @SerialName("cid")
+    val cid: Int? = 0,
+    @SerialName("copyright")
+    val copyright: Int? = 0,
+    @SerialName("ctime")
+    val ctime: Int? = 0,
+    @SerialName("desc")
+    val desc: String? = "",
+    @SerialName("dimension")
+    val dimension: Dimension? = Dimension(),
+    @SerialName("duration")
+    val duration: Int? = 0,
+    @SerialName("dynamic")
+    val `dynamic`: String? = "",
+    @SerialName("first_frame")
+    val firstFrame: String? = "",
+    @SerialName("jump_url")
+    val jumpUrl: String? = "",
+    @SerialName("mission_id")
+    val missionId: Int? = 0,
+    @SerialName("owner")
+    val owner: Owner? = Owner(),
+    @SerialName("pic")
+    val pic: String? = "",
+//    @SerialName("player_info")
+//    val playerInfo: Any?,
+    @SerialName("pubdate")
+    val pubdate: Int? = 0,
+    @SerialName("rights")
+    val rights: Rights? = Rights(),
+    @SerialName("short_link")
+    val shortLink: String? = "",
+    @SerialName("short_link_v2")
+    val shortLinkV2: String? = "",
+    @SerialName("stat")
+    val stat: Stat? = Stat(),
+    @SerialName("state")
+    val state: Int? = 0,
+    @SerialName("tid")
+    val tid: Int? = 0,
+    @SerialName("title")
+    val title: String? = "",
+    @SerialName("tname")
+    val tname: String? = "",
+    @SerialName("videos")
+    val videos: Int? = 0
 )
 
+@Serializable
 data class Dimension(
-    @JSONField(name = "height")
-    val height: Int?,
-    @JSONField(name = "rotate")
-    val rotate: Int?,
-    @JSONField(name = "width")
-    val width: Int?
+    @SerialName("height")
+    val height: Int? = 0,
+    @SerialName("rotate")
+    val rotate: Int? = 0,
+    @SerialName("width")
+    val width: Int? = 0
 )
 
+@Serializable
 data class Owner(
-    @JSONField(name = "face")
-    val face: String?,
-    @JSONField(name = "mid")
-    val mid: Int?,
-    @JSONField(name = "name")
-    val name: String?
+    @SerialName("face")
+    val face: String? = "",
+    @SerialName("mid")
+    val mid: Int? = 0,
+    @SerialName("name")
+    val name: String? = ""
 )
 
+@Serializable
 data class Rights(
-    @JSONField(name = "autoplay")
-    val autoplay: Int?,
-    @JSONField(name = "bp")
-    val bp: Int?,
-    @JSONField(name = "download")
-    val download: Int?,
-    @JSONField(name = "elec")
-    val elec: Int?,
-    @JSONField(name = "hd5")
-    val hd5: Int?,
-    @JSONField(name = "is_cooperation")
-    val isCooperation: Int?,
-    @JSONField(name = "movie")
-    val movie: Int?,
-    @JSONField(name = "no_background")
-    val noBackground: Int?,
-    @JSONField(name = "no_reprint")
-    val noReprint: Int?,
-    @JSONField(name = "pay")
-    val pay: Int?,
-    @JSONField(name = "ugc_pay")
-    val ugcPay: Int?,
-    @JSONField(name = "ugc_pay_preview")
-    val ugcPayPreview: Int?
+    @SerialName("autoplay")
+    val autoplay: Int? = 0,
+    @SerialName("bp")
+    val bp: Int? = 0,
+    @SerialName("download")
+    val download: Int? = 0,
+    @SerialName("elec")
+    val elec: Int? = 0,
+    @SerialName("hd5")
+    val hd5: Int? = 0,
+    @SerialName("is_cooperation")
+    val isCooperation: Int? = 0,
+    @SerialName("movie")
+    val movie: Int? = 0,
+    @SerialName("no_background")
+    val noBackground: Int? = 0,
+    @SerialName("no_reprint")
+    val noReprint: Int? = 0,
+    @SerialName("pay")
+    val pay: Int? = 0,
+    @SerialName("ugc_pay")
+    val ugcPay: Int? = 0,
+    @SerialName("ugc_pay_preview")
+    val ugcPayPreview: Int? = 0
 )
 
+@Serializable
 data class Stat(
-    @JSONField(name = "aid")
-    val aid: Int?,
-    @JSONField(name = "coin")
-    val coin: Int?,
-    @JSONField(name = "danmaku")
-    val danmaku: Int?,
-    @JSONField(name = "dislike")
-    val dislike: Int?,
-    @JSONField(name = "favorite")
-    val favorite: Int?,
-    @JSONField(name = "his_rank")
-    val hisRank: Int?,
-    @JSONField(name = "like")
-    val like: Int?,
-    @JSONField(name = "now_rank")
-    val nowRank: Int?,
-    @JSONField(name = "reply")
-    val reply: Int?,
-    @JSONField(name = "share")
-    val share: Int?,
-    @JSONField(name = "view")
-    val view: Int?
+    @SerialName("aid")
+    val aid: Int? = 0,
+    @SerialName("coin")
+    val coin: Int? = 0,
+    @SerialName("danmaku")
+    val danmaku: Int? = 0,
+    @SerialName("dislike")
+    val dislike: Int? = 0,
+    @SerialName("favorite")
+    val favorite: Int? = 0,
+    @SerialName("his_rank")
+    val hisRank: Int? = 0,
+    @SerialName("like")
+    val like: Int? = 0,
+    @SerialName("now_rank")
+    val nowRank: Int? = 0,
+    @SerialName("reply")
+    val reply: Int? = 0,
+    @SerialName("share")
+    val share: Int? = 0,
+    @SerialName("view")
+    val view: Int? = 0
 )

@@ -1,297 +1,326 @@
 package com.hcyacg.entity
 
-import com.alibaba.fastjson.annotation.JSONField
 
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
 
+@Serializable
 data class BiliBiliForWard(
-    @JSONField(name = "item")
-    val item: BFWItem?,
-    @JSONField(name = "origin")
-    val origin: String?,
-    @JSONField(name = "origin_extend_json")
-    val originExtendJson: String?,
-    @JSONField(name = "origin_user")
-    val originUser: OriginUser?,
-    @JSONField(name = "user")
-    val user: UserX?
+    @SerialName("item")
+    val item: BFWItem? = BFWItem(),
+    @SerialName("origin")
+    val origin: String? = "",
+    @SerialName("origin_extend_json")
+    val originExtendJson: String? = "",
+    @SerialName("origin_user")
+    val originUser: OriginUser? = OriginUser(),
+    @SerialName("user")
+    val user: UserX? = UserX()
 )
 
+@Serializable
 data class BFWItem(
-    @JSONField(name = "content")
-    val content: String?,
-    @JSONField(name = "ctrl")
-    val ctrl: String?,
-    @JSONField(name = "orig_dy_id")
-    val origDyId: Long?,
-    @JSONField(name = "orig_type")
-    val origType: Int?,
-    @JSONField(name = "pre_dy_id")
-    val preDyId: Long?,
-    @JSONField(name = "reply")
-    val reply: Int?,
-    @JSONField(name = "rp_id")
-    val rpId: Long?,
-    @JSONField(name = "timestamp")
-    val timestamp: Int?,
-    @JSONField(name = "uid")
-    val uid: Int?
+    @SerialName("content")
+    val content: String? = "",
+    @SerialName("ctrl")
+    val ctrl: String? = "",
+    @SerialName("orig_dy_id")
+    val origDyId: Long? = 0,
+    @SerialName("orig_type")
+    val origType: Int? = 0,
+    @SerialName("pre_dy_id")
+    val preDyId: Long? = 0,
+    @SerialName("reply")
+    val reply: Int? = 0,
+    @SerialName("rp_id")
+    val rpId: Long? = 0,
+    @SerialName("timestamp")
+    val timestamp: Int? = 0,
+    @SerialName("uid")
+    val uid: Int? = 0
 )
 
+@Serializable
 data class OriginUser(
-    @JSONField(name = "card")
-    val card: BFWCard?,
-    @JSONField(name = "info")
-    val info: BFWInfo?,
-    @JSONField(name = "level_info")
-    val levelInfo: BFWLevelInfo?,
-    @JSONField(name = "pendant")
-    val pendant: BFWPendant?,
-    @JSONField(name = "rank")
-    val rank: String?,
-    @JSONField(name = "sign")
-    val sign: String?,
-    @JSONField(name = "vip")
-    val vip: VipX?
+    @SerialName("card")
+    val card: BFWCard? = BFWCard(),
+    @SerialName("info")
+    val info: BFWInfo? = BFWInfo(),
+    @SerialName("level_info")
+    val levelInfo: BFWLevelInfo? = BFWLevelInfo(),
+    @SerialName("pendant")
+    val pendant: BFWPendant? = BFWPendant(),
+    @SerialName("rank")
+    val rank: String? = "",
+    @SerialName("sign")
+    val sign: String? = "",
+    @SerialName("vip")
+    val vip: VipX? = VipX()
 )
 
+@Serializable
 data class UserX(
-    @JSONField(name = "face")
-    val face: String?,
-    @JSONField(name = "uid")
-    val uid: Int?,
-    @JSONField(name = "uname")
-    val uname: String?
+    @SerialName("face")
+    val face: String? = "",
+    @SerialName("uid")
+    val uid: Int? = 0,
+    @SerialName("uname")
+    val uname: String? = ""
 )
 
+@Serializable
 data class BFWLabel(
-    @JSONField(name = "label_theme")
-    val labelTheme: String?,
-    @JSONField(name = "path")
-    val path: String?,
-    @JSONField(name = "text")
-    val text: String?
+    @SerialName("label_theme")
+    val labelTheme: String? = "",
+    @SerialName("path")
+    val path: String? = "",
+    @SerialName("text")
+    val text: String? = ""
 )
 
-
+@Serializable
 data class Verify(
-    @JSONField(name = "asw")
-    val asw: Asw?,
-    @JSONField(name = "cc")
-    val cc: Cc?,
-    @JSONField(name = "csw")
-    val csw: Csw?,
-    @JSONField(name = "dc")
-    val dc: Dc?,
-    @JSONField(name = "gc")
-    val gc: Gc?,
-    @JSONField(name = "ra")
-    val ra: Ra?,
-    @JSONField(name = "sp")
-    val sp: Sp?,
-    @JSONField(name = "sw")
-    val sw: Sw?,
-    @JSONField(name = "ur")
-    val ur: Ur?
+    @SerialName("asw")
+    val asw: Asw? = Asw(),
+    @SerialName("cc")
+    val cc: Cc? = Cc(),
+    @SerialName("csw")
+    val csw: Csw? = Csw(),
+    @SerialName("dc")
+    val dc: Dc? = Dc(),
+    @SerialName("gc")
+    val gc: Gc? = Gc(),
+    @SerialName("ra")
+    val ra: Ra? = Ra(),
+    @SerialName("sp")
+    val sp: Sp? = Sp(),
+    @SerialName("sw")
+    val sw: Sw? = Sw(),
+    @SerialName("ur")
+    val ur: Ur? = Ur()
 )
 
+@Serializable
 data class Asw(
-    @JSONField(name = "fl")
-    val fl: Int?,
-    @JSONField(name = "nv")
-    val nv: Int?
+    @SerialName("fl")
+    val fl: Int? = 0,
+    @SerialName("nv")
+    val nv: Int? = 0
 )
 
+@Serializable
 class Cc
 
+@Serializable
 class Csw
 
+@Serializable
 class Dc
 
+@Serializable
 class Gc
 
+@Serializable
 class Ra
 
+@Serializable
 class Sp
 
+@Serializable
 data class Sw(
-    @JSONField(name = "fl")
-    val fl: Int?,
-    @JSONField(name = "nv")
-    val nv: Int?
+    @SerialName("fl")
+    val fl: Int? = 0,
+    @SerialName("nv")
+    val nv: Int? = 0
 )
 
+@Serializable
 class Ur
 
+@Serializable
 data class BFWCard(
-    @JSONField(name = "official_verify")
-    val officialVerify: BFWOfficialVerify?
+    @SerialName("official_verify")
+    val officialVerify: BFWOfficialVerify? = BFWOfficialVerify()
 )
 
+@Serializable
 data class BFWInfo(
-    @JSONField(name = "face")
-    val face: String?,
-    @JSONField(name = "face_nft")
-    val faceNft: Int?,
-    @JSONField(name = "uid")
-    val uid: Int?,
-    @JSONField(name = "uname")
-    val uname: String?
+    @SerialName("face")
+    val face: String? = "",
+    @SerialName("face_nft")
+    val faceNft: Int? = 0,
+    @SerialName("uid")
+    val uid: Int? = 0,
+    @SerialName("uname")
+    val uname: String? = ""
 )
 
+@Serializable
 data class BFWLevelInfo(
-    @JSONField(name = "current_level")
-    val currentLevel: Int?
+    @SerialName("current_level")
+    val currentLevel: Int? = 0
 )
 
+@Serializable
 data class BFWPendant(
-    @JSONField(name = "expire")
-    val expire: Int?,
-    @JSONField(name = "image")
-    val image: String?,
-    @JSONField(name = "image_enhance")
-    val imageEnhance: String?,
-    @JSONField(name = "image_enhance_frame")
-    val imageEnhanceFrame: String?,
-    @JSONField(name = "name")
-    val name: String?,
-    @JSONField(name = "pid")
-    val pid: Int?
+    @SerialName("expire")
+    val expire: Int? = 0,
+    @SerialName("image")
+    val image: String? = "",
+    @SerialName("image_enhance")
+    val imageEnhance: String? = "",
+    @SerialName("image_enhance_frame")
+    val imageEnhanceFrame: String? = "",
+    @SerialName("name")
+    val name: String? = "",
+    @SerialName("pid")
+    val pid: Int? = 0
 )
 
+@Serializable
 data class VipX(
-    @JSONField(name = "avatar_subscript")
-    val avatarSubscript: Int?,
-    @JSONField(name = "avatar_subscript_url")
-    val avatarSubscriptUrl: String?,
-    @JSONField(name = "label")
-    val label: LabelX?,
-    @JSONField(name = "nickname_color")
-    val nicknameColor: String?,
-    @JSONField(name = "role")
-    val role: Int?,
-    @JSONField(name = "themeType")
-    val themeType: Int?,
-    @JSONField(name = "vipDueDate")
-    val vipDueDate: Long?,
-    @JSONField(name = "vipStatus")
-    val vipStatus: Int?,
-    @JSONField(name = "vipType")
-    val vipType: Int?
+    @SerialName("avatar_subscript")
+    val avatarSubscript: Int? = 0,
+    @SerialName("avatar_subscript_url")
+    val avatarSubscriptUrl: String? = "",
+    @SerialName("label")
+    val label: LabelX? = LabelX(),
+    @SerialName("nickname_color")
+    val nicknameColor: String? = "",
+    @SerialName("role")
+    val role: Int? = 0,
+    @SerialName("themeType")
+    val themeType: Int? = 0,
+    @SerialName("vipDueDate")
+    val vipDueDate: Long? = 0,
+    @SerialName("vipStatus")
+    val vipStatus: Int? = 0,
+    @SerialName("vipType")
+    val vipType: Int? = 0
 )
 
+@Serializable
 data class BFWOfficialVerify(
-    @JSONField(name = "desc")
-    val desc: String?,
-    @JSONField(name = "type")
-    val type: Int?
+    @SerialName("desc")
+    val desc: String? = "",
+    @SerialName("type")
+    val type: Int? = 0
 )
 
+@Serializable
 data class LabelX(
-    @JSONField(name = "bg_color")
-    val bgColor: String?,
-    @JSONField(name = "bg_style")
-    val bgStyle: Int?,
-    @JSONField(name = "border_color")
-    val borderColor: String?,
-    @JSONField(name = "label_theme")
-    val labelTheme: String?,
-    @JSONField(name = "path")
-    val path: String?,
-    @JSONField(name = "text")
-    val text: String?,
-    @JSONField(name = "text_color")
-    val textColor: String?
+    @SerialName("bg_color")
+    val bgColor: String? = "",
+    @SerialName("bg_style")
+    val bgStyle: Int? = 0,
+    @SerialName("border_color")
+    val borderColor: String? = "",
+    @SerialName("label_theme")
+    val labelTheme: String? = "",
+    @SerialName("path")
+    val path: String? = "",
+    @SerialName("text")
+    val text: String? = "",
+    @SerialName("text_color")
+    val textColor: String? = ""
 )
 
+@Serializable
 data class OriginJson(
-    @JSONField(name = "item")
-    val item: OItem?,
-    @JSONField(name = "user")
-    val user: OUser?
+    @SerialName("item")
+    val item: OItem? = OItem(),
+    @SerialName("user")
+    val user: OUser? = OUser()
 )
 
+@Serializable
 data class OItem(
-    @JSONField(name = "at_control")
-    val atControl: String?,
-    @JSONField(name = "category")
-    val category: String?,
-    @JSONField(name = "description")
-    val description: String?,
-    @JSONField(name = "id")
-    val id: Int?,
-    @JSONField(name = "is_fav")
-    val isFav: Int?,
-    @JSONField(name = "pictures")
-    val pictures: List<OPicture>?,
-    @JSONField(name = "pictures_count")
-    val picturesCount: Int?,
-    @JSONField(name = "reply")
-    val reply: Int?,
-    @JSONField(name = "role")
-    val role: List<Any>?,
-    @JSONField(name = "settings")
-    val settings: OSettings?,
-    @JSONField(name = "source")
-    val source: List<Any>?,
-    @JSONField(name = "title")
-    val title: String?,
-    @JSONField(name = "upload_time")
-    val uploadTime: Int?
+    @SerialName("at_control")
+    val atControl: String? = "",
+    @SerialName("category")
+    val category: String? = "",
+    @SerialName("description")
+    val description: String? = "",
+    @SerialName("id")
+    val id: Int? = 0,
+    @SerialName("is_fav")
+    val isFav: Int? = 0,
+    @SerialName("pictures")
+    val pictures: List<OPicture>? = listOf(),
+    @SerialName("pictures_count")
+    val picturesCount: Int? = 0,
+    @SerialName("reply")
+    val reply: Int? = 0,
+//    @SerialName("role")
+//    val role: List<Any>?,
+    @SerialName("settings")
+    val settings: OSettings? = OSettings(),
+//    @SerialName("source")
+//    val source: List<Any>?,
+    @SerialName("title")
+    val title: String? = "",
+    @SerialName("upload_time")
+    val uploadTime: Int? = 0
 )
 
+@Serializable
 data class OUser(
-    @JSONField(name = "head_url")
-    val headUrl: String?,
-    @JSONField(name = "name")
-    val name: String?,
-    @JSONField(name = "uid")
-    val uid: Int?,
-    @JSONField(name = "vip")
-    val vip: OVip?
+    @SerialName("head_url")
+    val headUrl: String? = "",
+    @SerialName("name")
+    val name: String? = "",
+    @SerialName("uid")
+    val uid: Int? = 0,
+    @SerialName("vip")
+    val vip: OVip? = OVip()
 )
 
+@Serializable
 data class OPicture(
-    @JSONField(name = "img_height")
-    val imgHeight: Int?,
-    @JSONField(name = "img_size")
-    val imgSize: Double?,
-    @JSONField(name = "img_src")
-    val imgSrc: String?,
-    @JSONField(name = "img_tags")
-    val imgTags: Any?,
-    @JSONField(name = "img_width")
-    val imgWidth: Int?
+    @SerialName("img_height")
+    val imgHeight: Int? = 0,
+    @SerialName("img_size")
+    val imgSize: Double? = 0.0,
+    @SerialName("img_src")
+    val imgSrc: String? = "",
+//    @SerialName("img_tags")
+//    val imgTags: Any?,
+    @SerialName("img_width")
+    val imgWidth: Int? = 0
 )
 
+@Serializable
 data class OSettings(
-    @JSONField(name = "copy_forbidden")
-    val copyForbidden: String?
+    @SerialName("copy_forbidden")
+    val copyForbidden: String? = ""
 )
 
+@Serializable
 data class OVip(
-    @JSONField(name = "avatar_subscript")
-    val avatarSubscript: Int?,
-    @JSONField(name = "due_date")
-    val dueDate: Long?,
-    @JSONField(name = "label")
-    val label: OLabel?,
-    @JSONField(name = "nickname_color")
-    val nicknameColor: String?,
-    @JSONField(name = "status")
-    val status: Int?,
-    @JSONField(name = "theme_type")
-    val themeType: Int?,
-    @JSONField(name = "type")
-    val type: Int?,
-    @JSONField(name = "vip_pay_type")
-    val vipPayType: Int?
+    @SerialName("avatar_subscript")
+    val avatarSubscript: Int? = 0,
+    @SerialName("due_date")
+    val dueDate: Long? = 0,
+    @SerialName("label")
+    val label: OLabel? = OLabel(),
+    @SerialName("nickname_color")
+    val nicknameColor: String? = "",
+    @SerialName("status")
+    val status: Int? = 0,
+    @SerialName("theme_type")
+    val themeType: Int? = 0,
+    @SerialName("type")
+    val type: Int? = 0,
+    @SerialName("vip_pay_type")
+    val vipPayType: Int? = 0
 )
 
+@Serializable
 data class OLabel(
-    @JSONField(name = "label_theme")
-    val labelTheme: String?,
-    @JSONField(name = "path")
-    val path: String?,
-    @JSONField(name = "text")
-    val text: String?
+    @SerialName("label_theme")
+    val labelTheme: String? = "",
+    @SerialName("path")
+    val path: String? = "",
+    @SerialName("text")
+    val text: String? = ""
 )

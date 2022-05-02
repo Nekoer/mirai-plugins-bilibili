@@ -1,17 +1,20 @@
 package com.hcyacg.entity
-import kotlinx.serialization.SerialName
+
 import kotlinx.serialization.Serializable
 
+import kotlinx.serialization.SerialName
+
+
 @Serializable
-data class BiliBiliDynamicItem(
+data class BiliBiliTextAndImage(
     @SerialName("item")
-    var item: Item? = Item(),
+    val item: BTIItem? = BTIItem(),
     @SerialName("user")
-    val user: BDIUser? = BDIUser()
+    val user: BTIUser? = BTIUser()
 )
 
 @Serializable
-data class Item(
+data class BTIItem(
     @SerialName("at_control")
     val atControl: String? = "",
     @SerialName("category")
@@ -23,41 +26,25 @@ data class Item(
     @SerialName("is_fav")
     val isFav: Int? = 0,
     @SerialName("pictures")
-    val pictures: List<Picture>? = listOf(),
+    val pictures: List<BTIPicture>? = listOf(),
     @SerialName("pictures_count")
     val picturesCount: Int? = 0,
     @SerialName("reply")
     val reply: Int? = 0,
 //    @SerialName("role")
-//    val role: List<Any>?,
+//    val role: List<Any>? = listOf(),
     @SerialName("settings")
-    val settings: Settings? = Settings(),
+    val settings: BTISettings? = BTISettings(),
 //    @SerialName("source")
-//    val source: List<Any>?,
+//    val source: List<Any>? = listOf(),
     @SerialName("title")
     val title: String? = "",
     @SerialName("upload_time")
-    val uploadTime: Int? = 0,
-    @SerialName("content")
-    val content: String? = "",
-    @SerialName("ctrl")
-    val ctrl: String? = "",
-    @SerialName("orig_dy_id")
-    val origDyId: Int? = 0,
-    @SerialName("pre_dy_id")
-    val preDyId: Int? = 0,
-    @SerialName("rp_id")
-    val rpId: Long? = 0,
-    @SerialName("timestamp")
-    val timestamp: Int? = 0,
-    @SerialName("uid")
-    val uid: Int? = 0
+    val uploadTime: Int? = 0
 )
 
 @Serializable
-data class BDIUser(
-    @SerialName("face")
-    val face: String? = "",
+data class BTIUser(
     @SerialName("head_url")
     val headUrl: String? = "",
     @SerialName("name")
@@ -65,37 +52,37 @@ data class BDIUser(
     @SerialName("uid")
     val uid: Int? = 0,
     @SerialName("vip")
-    val vip: BDIVip? = BDIVip(),
-    @SerialName("uname")
-    val uname: String? = ""
+    val vip: BTIVip? = BTIVip()
 )
 
 @Serializable
-data class Picture(
+data class BTIPicture(
     @SerialName("img_height")
     val imgHeight: Int? = 0,
     @SerialName("img_size")
     val imgSize: Double? = 0.0,
     @SerialName("img_src")
     val imgSrc: String? = "",
+//    @SerialName("img_tags")
+//    val imgTags: Any? = Any(),
     @SerialName("img_width")
     val imgWidth: Int? = 0
 )
 
 @Serializable
-data class Settings(
+data class BTISettings(
     @SerialName("copy_forbidden")
     val copyForbidden: String? = ""
 )
 
 @Serializable
-data class BDIVip(
+data class BTIVip(
     @SerialName("avatar_subscript")
     val avatarSubscript: Int? = 0,
     @SerialName("due_date")
     val dueDate: Long? = 0,
     @SerialName("label")
-    val label: BDILabel? = BDILabel(),
+    val label: BTILabel? = BTILabel(),
     @SerialName("nickname_color")
     val nicknameColor: String? = "",
     @SerialName("status")
@@ -109,7 +96,7 @@ data class BDIVip(
 )
 
 @Serializable
-data class BDILabel(
+data class BTILabel(
     @SerialName("label_theme")
     val labelTheme: String? = "",
     @SerialName("path")

@@ -1,239 +1,252 @@
 package com.hcyacg.entity
 
-import com.alibaba.fastjson.annotation.JSONField
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
 
-
+@Serializable
 data class BiliBiliDynamicArticle(
-    @JSONField(name = "act_id")
-    val actId: Int,
-    @JSONField(name = "apply_time")
-    val applyTime: String,
-    @JSONField(name = "authenMark")
-    val authenMark: Any,
-    @JSONField(name = "author")
-    val author: BDAAuthor,
-    @JSONField(name = "banner_url")
-    val bannerUrl: String,
-    @JSONField(name = "categories")
-    val categories: List<BDACategory>,
-    @JSONField(name = "category")
-    val category: BDACategoryX,
-    @JSONField(name = "check_time")
-    val checkTime: String,
-    @JSONField(name = "cover_avid")
-    val coverAvid: Int,
-    @JSONField(name = "ctime")
-    val ctime: Int,
-    @JSONField(name = "dispute")
-    val dispute: Dispute,
-    @JSONField(name = "id")
-    val id: Int,
-    @JSONField(name = "image_urls")
-    val imageUrls: List<String>,
-    @JSONField(name = "is_like")
-    val isLike: Boolean,
-    @JSONField(name = "list")
-    val list: BDAList,
-    @JSONField(name = "media")
-    val media: BDAMedia,
-    @JSONField(name = "origin_image_urls")
-    val originImageUrls: List<String>,
-    @JSONField(name = "original")
-    val original: Int,
-    @JSONField(name = "publish_time")
-    val publishTime: Int,
-    @JSONField(name = "reprint")
-    val reprint: Int,
-    @JSONField(name = "state")
-    val state: Int,
-    @JSONField(name = "stats")
-    val stats: BDAStats,
-    @JSONField(name = "summary")
-    val summary: String,
-    @JSONField(name = "template_id")
-    val templateId: Int,
-    @JSONField(name = "title")
-    val title: String,
-    @JSONField(name = "top_video_info")
-    val topVideoInfo: Any,
-    @JSONField(name = "type")
-    val type: Int,
-    @JSONField(name = "words")
-    val words: Int
+    @SerialName("act_id")
+    val actId: Int? = 0,
+    @SerialName("apply_time")
+    val applyTime: String? = "",
+//    @SerialName("authenMark")
+//    val authenMark: Any,
+    @SerialName("author")
+    val author: BDAAuthor? = BDAAuthor(),
+    @SerialName("banner_url")
+    val bannerUrl: String? = "",
+    @SerialName("categories")
+    val categories: List<BDACategory>? = listOf(),
+    @SerialName("category")
+    val category: BDACategoryX? = BDACategoryX(),
+    @SerialName("check_time")
+    val checkTime: String? = "",
+    @SerialName("cover_avid")
+    val coverAvid: Int? = 0,
+    @SerialName("ctime")
+    val ctime: Int? = 0,
+    @SerialName("dispute")
+    val dispute: Dispute? = Dispute(),
+    @SerialName("id")
+    val id: Int? = 0,
+    @SerialName("image_urls")
+    val imageUrls: List<String> = listOf(),
+    @SerialName("is_like")
+    val isLike: Boolean? = false,
+    @SerialName("list")
+    val list: BDAList? = BDAList(),
+    @SerialName("media")
+    val media: BDAMedia? = BDAMedia(),
+    @SerialName("origin_image_urls")
+    val originImageUrls: List<String> = listOf(),
+    @SerialName("original")
+    val original: Int? = 0,
+    @SerialName("publish_time")
+    val publishTime: Int? = 0,
+    @SerialName("reprInt")
+    val reprInt: Int? = 0,
+    @SerialName("state")
+    val state: Int? = 0,
+    @SerialName("stats")
+    val stats: BDAStats? = BDAStats(),
+    @SerialName("summary")
+    val summary: String? = "",
+    @SerialName("template_id")
+    val templateId: Int? = 0,
+    @SerialName("title")
+    val title: String? = "",
+//    @SerialName("top_video_info")
+//    val topVideoInfo: Any,
+    @SerialName("type")
+    val type: Int? = 0,
+    @SerialName("words")
+    val words: Int? = 0
 )
 
+@Serializable
 data class BDAAuthor(
-    @JSONField(name = "face")
-    val face: String,
-    @JSONField(name = "mid")
-    val mid: Int,
-    @JSONField(name = "name")
-    val name: String,
-    @JSONField(name = "nameplate")
-    val nameplate: BDANameplate,
-    @JSONField(name = "official_verify")
-    val officialVerify: BDAOfficialVerify,
-    @JSONField(name = "pendant")
-    val pendant: BDAPendant,
-    @JSONField(name = "vip")
-    val vip: BDAVip
+    @SerialName("face")
+    val face: String? = "",
+    @SerialName("mid")
+    val mid: Int? = 0,
+    @SerialName("name")
+    val name: String? = "",
+    @SerialName("nameplate")
+    val nameplate: BDANameplate? = BDANameplate(),
+    @SerialName("official_verify")
+    val officialVerify: BDAOfficialVerify? = BDAOfficialVerify(),
+    @SerialName("pendant")
+    val pendant: BDAPendant? = BDAPendant(),
+    @SerialName("vip")
+    val vip: BDAVip? = BDAVip()
 )
 
+@Serializable
 data class BDACategory(
-    @JSONField(name = "id")
-    val id: Int,
-    @JSONField(name = "name")
-    val name: String,
-    @JSONField(name = "parent_id")
-    val parentId: Int
+    @SerialName("id")
+    val id: Int? = 0,
+    @SerialName("name")
+    val name: String? = "",
+    @SerialName("parent_id")
+    val parentId: Int? = 0
 )
 
+@Serializable
 data class BDACategoryX(
-    @JSONField(name = "id")
-    val id: Int,
-    @JSONField(name = "name")
-    val name: String,
-    @JSONField(name = "parent_id")
-    val parentId: Int
+    @SerialName("id")
+    val id: Int? = 0,
+    @SerialName("name")
+    val name: String? = "",
+    @SerialName("parent_id")
+    val parentId: Int? = 0
 )
 
+@Serializable
 data class Dispute(
-    @JSONField(name = "dispute")
-    val dispute: String,
-    @JSONField(name = "dispute_url")
-    val disputeUrl: String
+    @SerialName("dispute")
+    val dispute: String? = "",
+    @SerialName("dispute_url")
+    val disputeUrl: String? = ""
 )
 
+@Serializable
 data class BDAList(
-    @JSONField(name = "apply_time")
-    val applyTime: String,
-    @JSONField(name = "articles_count")
-    val articlesCount: Int,
-    @JSONField(name = "check_time")
-    val checkTime: String,
-    @JSONField(name = "ctime")
-    val ctime: Int,
-    @JSONField(name = "id")
-    val id: Int,
-    @JSONField(name = "image_url")
-    val imageUrl: String,
-    @JSONField(name = "mid")
-    val mid: Int,
-    @JSONField(name = "name")
-    val name: String,
-    @JSONField(name = "publish_time")
-    val publishTime: Int,
-    @JSONField(name = "read")
-    val read: Int,
-    @JSONField(name = "reason")
-    val reason: String,
-    @JSONField(name = "state")
-    val state: Int,
-    @JSONField(name = "summary")
-    val summary: String,
-    @JSONField(name = "update_time")
-    val updateTime: Int,
-    @JSONField(name = "words")
-    val words: Int
+    @SerialName("apply_time")
+    val applyTime: String? = "",
+    @SerialName("articles_count")
+    val articlesCount: Int? = 0,
+    @SerialName("check_time")
+    val checkTime: String? = "",
+    @SerialName("ctime")
+    val ctime: Int? = 0,
+    @SerialName("id")
+    val id: Int? = 0,
+    @SerialName("image_url")
+    val imageUrl: String? = "",
+    @SerialName("mid")
+    val mid: Int? = 0,
+    @SerialName("name")
+    val name: String? = "",
+    @SerialName("publish_time")
+    val publishTime: Int? = 0,
+    @SerialName("read")
+    val read: Int? = 0,
+    @SerialName("reason")
+    val reason: String? = "",
+    @SerialName("state")
+    val state: Int? = 0,
+    @SerialName("summary")
+    val summary: String? = "",
+    @SerialName("update_time")
+    val updateTime: Int? = 0,
+    @SerialName("words")
+    val words: Int? = 0
 )
 
+@Serializable
 data class BDAMedia(
-    @JSONField(name = "area")
-    val area: String,
-    @JSONField(name = "cover")
-    val cover: String,
-    @JSONField(name = "media_id")
-    val mediaId: Int,
-    @JSONField(name = "score")
-    val score: Int,
-    @JSONField(name = "season_id")
-    val seasonId: Int,
-    @JSONField(name = "spoiler")
-    val spoiler: Int,
-    @JSONField(name = "title")
-    val title: String,
-    @JSONField(name = "type_id")
-    val typeId: Int,
-    @JSONField(name = "type_name")
-    val typeName: String
+    @SerialName("area")
+    val area: String? = "",
+    @SerialName("cover")
+    val cover: String? = "",
+    @SerialName("media_id")
+    val mediaId: Int? = 0,
+    @SerialName("score")
+    val score: Int? = 0,
+    @SerialName("season_id")
+    val seasonId: Int? = 0,
+    @SerialName("spoiler")
+    val spoiler: Int? = 0,
+    @SerialName("title")
+    val title: String? = "",
+    @SerialName("type_id")
+    val typeId: Int? = 0,
+    @SerialName("type_name")
+    val typeName: String? = ""
 )
 
+@Serializable
 data class BDAStats(
-    @JSONField(name = "coin")
-    val coin: Int,
-    @JSONField(name = "dislike")
-    val dislike: Int,
-    @JSONField(name = "dynamic")
-    val `dynamic`: Int,
-    @JSONField(name = "favorite")
-    val favorite: Int,
-    @JSONField(name = "like")
-    val like: Int,
-    @JSONField(name = "reply")
-    val reply: Int,
-    @JSONField(name = "share")
-    val share: Int,
-    @JSONField(name = "view")
-    val view: Int
+    @SerialName("coin")
+    val coin: Int? = 0,
+    @SerialName("dislike")
+    val dislike: Int? = 0,
+    @SerialName("dynamic")
+    val `dynamic`: Int? = 0,
+    @SerialName("favorite")
+    val favorite: Int? = 0,
+    @SerialName("like")
+    val like: Int? = 0,
+    @SerialName("reply")
+    val reply: Int? = 0,
+    @SerialName("share")
+    val share: Int? = 0,
+    @SerialName("view")
+    val view: Int? = 0
 )
 
+@Serializable
 data class BDANameplate(
-    @JSONField(name = "condition")
-    val condition: String,
-    @JSONField(name = "image")
-    val image: String,
-    @JSONField(name = "image_small")
-    val imageSmall: String,
-    @JSONField(name = "level")
-    val level: String,
-    @JSONField(name = "name")
-    val name: String,
-    @JSONField(name = "nid")
-    val nid: Int
+    @SerialName("condition")
+    val condition: String? = "",
+    @SerialName("image")
+    val image: String? = "",
+    @SerialName("image_small")
+    val imageSmall: String? = "",
+    @SerialName("level")
+    val level: String? = "",
+    @SerialName("name")
+    val name: String? = "",
+    @SerialName("nid")
+    val nid: Int? = 0
 )
 
+@Serializable
 data class BDAOfficialVerify(
-    @JSONField(name = "desc")
-    val desc: String,
-    @JSONField(name = "type")
-    val type: Int
+    @SerialName("desc")
+    val desc: String? = "",
+    @SerialName("type")
+    val type: Int? = 0
 )
 
+@Serializable
 data class BDAPendant(
-    @JSONField(name = "expire")
-    val expire: Int,
-    @JSONField(name = "image")
-    val image: String,
-    @JSONField(name = "name")
-    val name: String,
-    @JSONField(name = "pid")
-    val pid: Int
+    @SerialName("expire")
+    val expire: Int? = 0,
+    @SerialName("image")
+    val image: String? = "",
+    @SerialName("name")
+    val name: String? = "",
+    @SerialName("pid")
+    val pid: Int? = 0
 )
 
+@Serializable
 data class BDAVip(
-    @JSONField(name = "avatar_subscript")
-    val avatarSubscript: Int,
-    @JSONField(name = "due_date")
-    val dueDate: Int,
-    @JSONField(name = "label")
-    val label: BDALabel,
-    @JSONField(name = "nickname_color")
-    val nicknameColor: String,
-    @JSONField(name = "status")
-    val status: Int,
-    @JSONField(name = "theme_type")
-    val themeType: Int,
-    @JSONField(name = "type")
-    val type: Int,
-    @JSONField(name = "vip_pay_type")
-    val vipPayType: Int
+    @SerialName("avatar_subscript")
+    val avatarSubscript: Int? = 0,
+    @SerialName("due_date")
+    val dueDate: Int? = 0,
+    @SerialName("label")
+    val label: BDALabel? = BDALabel(),
+    @SerialName("nickname_color")
+    val nicknameColor: String? = "",
+    @SerialName("status")
+    val status: Int? = 0,
+    @SerialName("theme_type")
+    val themeType: Int? = 0,
+    @SerialName("type")
+    val type: Int? = 0,
+    @SerialName("vip_pay_type")
+    val vipPayType: Int? = 0
 )
 
+@Serializable
 data class BDALabel(
-    @JSONField(name = "label_theme")
-    val labelTheme: String,
-    @JSONField(name = "path")
-    val path: String,
-    @JSONField(name = "text")
-    val text: String
+    @SerialName("label_theme")
+    val labelTheme: String? = "",
+    @SerialName("path")
+    val path: String? = "",
+    @SerialName("text")
+    val text: String? = ""
 )

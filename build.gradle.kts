@@ -2,14 +2,14 @@ plugins {
     val kotlinVersion = "1.6.10"
     kotlin("jvm") version kotlinVersion
     kotlin("plugin.serialization") version kotlinVersion
-
+    id("net.mamoe.mirai-console") version "2.11.0-M2.2"
     id("me.him188.maven-central-publish") version "1.0.0-dev-3"
 
-    id("net.mamoe.mirai-console") version "2.11.0-M2.2"
+
 }
 
 group = "com.hcyacg"
-version = "1.1.2"
+version = "1.1.4"
 
 repositories {
     mavenCentral()
@@ -17,15 +17,11 @@ repositories {
 
 dependencies {
 
-    implementation("com.alibaba:fastjson:2.0.1")
     implementation("org.apache.commons:commons-lang3:3.12.0")
     implementation("org.apache.httpcomponents:httpclient:4.5.13")
 
     implementation("org.jsoup:jsoup:1.14.3")
     implementation("org.ini4j:ini4j:0.5.4")
-
-
-//    implementation("com.squareup.okhttp3:okhttp:5.0.0-alpha.5")
 
     testImplementation(platform("org.junit:junit-bom:5.8.2"))
     testImplementation("org.junit.jupiter:junit-jupiter-api:5.8.2")
@@ -54,8 +50,10 @@ mavenCentralPublish {
     projectName = "mirai plugins bilibili"
     // description from project.description by default
     githubProject("Nekoer", "mirai-plugins-bilibili")
-
     useCentralS01()
     singleDevGithubProject("Nekoer", "mirai-plugins-bilibili")
     licenseFromGitHubProject("AGPL-3.0", "master")
+    publication {
+        artifact(tasks.getByName("buildPlugin"))
+    }
 }

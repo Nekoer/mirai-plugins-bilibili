@@ -1,6 +1,6 @@
 package com.hcyacg.bilibili
 
-import com.alibaba.fastjson.JSON
+
 import com.hcyacg.GroupSender
 import com.hcyacg.GroupSender.sendMessage
 import com.hcyacg.config.Data
@@ -11,6 +11,9 @@ import com.hcyacg.utils.Method
 import com.hcyacg.utils.RequestUtil
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.runBlocking
+import kotlinx.serialization.ExperimentalSerializationApi
+import kotlinx.serialization.decodeFromString
+import kotlinx.serialization.json.Json
 import net.mamoe.mirai.contact.nameCardOrNick
 import net.mamoe.mirai.event.events.GroupMessageEvent
 import net.mamoe.mirai.message.data.*
@@ -18,6 +21,7 @@ import net.mamoe.mirai.utils.ExternalResource.Companion.toExternalResource
 import net.mamoe.mirai.utils.ExternalResource.Companion.uploadAsImage
 import net.mamoe.mirai.utils.MiraiLogger
 import okhttp3.*
+import okhttp3.internal.ignoreIoExceptions
 import org.apache.commons.lang3.StringUtils
 import java.util.*
 
@@ -28,7 +32,7 @@ object BiliBiliCenter {
     private val logger = MiraiLogger.Factory.create(this::class.java)
     private const val bilibiliLiveV2 = "https://api.bilibili.com/x/space/acc/info?mid="
     private const val dynamic = "https://api.vc.bilibili.com/dynamic_svr/v1/dynamic_svr/space_history"
-
+    private val json = Json { ignoreUnknownKeys = true }
 //    private var flag = false
 
     fun load() {
@@ -37,6 +41,7 @@ object BiliBiliCenter {
     }
 
 
+    @OptIn(ExperimentalSerializationApi::class)
     private fun live() {
         Timer().schedule(object : TimerTask() {
             override fun run() {
@@ -49,13 +54,16 @@ object BiliBiliCenter {
                             logger
                         ) ?: return
 
-                        if (result.getIntValue("code") != 0) {
+                        val biliBiliLive = json.decodeFromString<BiliBiliLive>(result)
+
+                        if (biliBiliLive.code != 0) {
                             return
                         }
 
-                        val biliBiliLive = JSON.parseObject(result.toString(), BiliBiliLive::class.java)
-
                         if (biliBiliLive.data == null) {
+                            return
+                        }
+                        if (null == biliBiliLive.data.liveRoom) {
                             return
                         }
                         if (null == Data.live[up]) {
@@ -63,13 +71,13 @@ object BiliBiliCenter {
                         }
 
 
-                        if (null != biliBiliLive && Data.live[up] != biliBiliLive.data.liveRoom.liveStatus && biliBiliLive.data.liveRoom.liveStatus == 1) {
+                        if (Data.live[up] != biliBiliLive.data.liveRoom.liveStatus && biliBiliLive.data.liveRoom.liveStatus == 1) {
                             runBlocking {
                                 Data.live[up] = biliBiliLive.data.liveRoom.liveStatus
                                 GroupSender.sendMessage(biliBiliLive)
                                 delay(1000L)
                             }
-                        } else if (null != biliBiliLive && Data.live[up] != biliBiliLive.data.liveRoom.liveStatus && biliBiliLive.data.liveRoom.liveStatus == 0 && Data.live[up] != -1) {
+                        } else if (Data.live[up] != biliBiliLive.data.liveRoom.liveStatus && biliBiliLive.data.liveRoom.liveStatus == 0 && Data.live[up] != -1) {
                             Data.live[up] = -1
                             runBlocking {
                                 GroupSender.sendMessage(biliBiliLive)
@@ -84,6 +92,7 @@ object BiliBiliCenter {
         }, Date(), 60000L)
     }
 
+    @OptIn(ExperimentalSerializationApi::class)
     private fun dynamic() {
         Timer().schedule(object : TimerTask() {
             override fun run() {
@@ -100,8 +109,9 @@ object BiliBiliCenter {
                             Method.POST, dynamic,
                             requestBody, headers.build(),
                             logger
-                        )
-                        val biliBiliDynamic = JSON.parseObject(result.toString(), BiliBiliDynamic::class.java)
+                        ) ?: return
+
+                        val biliBiliDynamic = json.decodeFromString<BiliBiliDynamic>(result)
 
                         if (null == upData) {
                             upData = mutableMapOf()
@@ -151,6 +161,7 @@ object BiliBiliCenter {
     }
 
 
+    @OptIn(ExperimentalSerializationApi::class)
     fun statistical(event: GroupMessageEvent) {
         runBlocking {
             logger.info("正在统计监控列表")
@@ -163,14 +174,14 @@ object BiliBiliCenter {
                     requestBody, headers.build(),
                     logger
                 )
-                val biliBiliLive = JSON.parseObject(result.toString(), BiliBiliLive::class.java)
+                val biliBiliLive = json.decodeFromString<BiliBiliLive>(result.toString())
 
                 if (biliBiliLive.data == null) {
                     return@here
                 }
 
                 val toExternalResource =
-                    ImageUtil.getImage(biliBiliLive.data.face).toByteArray().toExternalResource()
+                    ImageUtil.getImage(biliBiliLive.data.face!!).toByteArray().toExternalResource()
                 val imageId: String = toExternalResource.uploadAsImage(event.group).imageId
                 toExternalResource.close()
 
