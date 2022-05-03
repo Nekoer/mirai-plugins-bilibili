@@ -21,5 +21,6 @@ enable:  #推送开关
   forward: true #转发
   live: true #直播
   video: true #视频
+  videoAtAll: true #视频 @全体成员
   dynamic: true #普通动态
 ```
