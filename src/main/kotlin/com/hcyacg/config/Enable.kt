@@ -14,6 +14,8 @@ data class Enable(
     var live: Boolean = true,
     @SerialName("video")
     var video: Boolean = true,
+    @SerialName("videoAtAll")
+    var video_At_All: Boolean = true,
     @SerialName("dynamic")
     var dynamic: Boolean = true,
 )

@@ -139,7 +139,7 @@ data class Origin(
     @SerialName("repost")
     val repost: Int? = 0,
     @SerialName("rid")
-    val rid: Int? = 0,
+    val rid: Long? = 0,
     @SerialName("rid_str")
     val ridStr: String? = "",
     @SerialName("status")

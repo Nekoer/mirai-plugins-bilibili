@@ -7,6 +7,7 @@ import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.json.Json
 import net.mamoe.mirai.Bot
+import net.mamoe.mirai.contact.SendMessageFailedException
 import net.mamoe.mirai.message.data.*
 import net.mamoe.mirai.utils.ExternalResource.Companion.toExternalResource
 import net.mamoe.mirai.utils.ExternalResource.Companion.uploadAsImage
@@ -86,7 +87,7 @@ object GroupSender {
                     return@here
                 }
                 run {
-
+                    var message: Message = PlainText("")
                     try {
                         if (imageList.isEmpty()) {
                             val toExternalResource =
@@ -95,7 +96,7 @@ object GroupSender {
                             toExternalResource.close()
                             imageList.add(imageId)
                         }
-                        var message: Message = PlainText("${biliBiliVideo.owner?.name} 发表了新视频").plus("\n")
+                        message = PlainText("${biliBiliVideo.owner?.name} 发表了新视频").plus("\n")
                             .plus("======").plus("\n")
 
                         imageList.forEach {
@@ -106,6 +107,12 @@ object GroupSender {
                             .plus(biliBiliVideo.desc!!).plus("\n")
                             .plus(biliBiliVideo.shortLink!!)
 
+                        if (Setting.enable.video_At_All) {
+                            group.sendMessage(AtAll.plus(message))
+                            return
+                        }
+                        group.sendMessage(message)
+                    } catch (e: SendMessageFailedException) {
                         group.sendMessage(message)
                     } catch (e: Exception) {
                         logger.error(e)
@@ -194,6 +201,7 @@ object GroupSender {
                             }
                         }
 
+
                         var message: MessageChain = PlainText("${biliBiliForWard.user?.uname!!} 转发了".plus("\n"))
                             .plus("======").plus("\n")
                             .plus(biliBiliForWard.item?.content!!).plus("\n")
@@ -213,10 +221,11 @@ object GroupSender {
         }
     }
 
-    suspend fun GroupSender.sendMessage(biliBiliText: BiliBiliText) {
+    suspend fun GroupSender.sendMessage(biliBiliText: BiliBiliText, dynamicIdStr: String) {
         if (biliBiliText.item == null) {
             return
         }
+
 
         Bot.instances.forEach { bot ->
 
@@ -230,7 +239,7 @@ object GroupSender {
 
                 run {
                     try {
-                        println(biliBiliText)
+
                         if (null == biliBiliText.item.content) {
                             return
                         }
@@ -241,7 +250,7 @@ object GroupSender {
                         val message: Message = PlainText(biliBiliText.user.uname!!).plus("发布了新动态").plus("\n")
                             .plus("======").plus("\n")
                             .plus(biliBiliText.item.content).plus("\n")
-                            .plus("https://t.bilibili.com/${biliBiliText.item.rpId}").plus("\n")
+                            .plus("https://t.bilibili.com/${dynamicIdStr}").plus("\n")
 
                         group.sendMessage(message)
                     } catch (e: Exception) {
@@ -252,7 +261,7 @@ object GroupSender {
         }
     }
 
-    suspend fun GroupSender.sendMessage(biliBiliTextAndImage: BiliBiliTextAndImage, timestamp: String) {
+    suspend fun GroupSender.sendMessage(biliBiliTextAndImage: BiliBiliTextAndImage, dynamicIdStr: String) {
         val imageList = mutableListOf<String>()
 
         if (biliBiliTextAndImage.item == null) {
@@ -297,7 +306,7 @@ object GroupSender {
                             message = message.plus(Image(it)).plus("\n")
                         }
 
-                        message = message.plus("https://t.bilibili.com/${timestamp}").plus("\n")
+                        message = message.plus("https://t.bilibili.com/${dynamicIdStr}").plus("\n")
 
                         group.sendMessage(message)
                     } catch (e: Exception) {
@@ -308,7 +317,6 @@ object GroupSender {
         }
     }
 
-    //fix
     @OptIn(ExperimentalSerializationApi::class)
     private suspend fun GroupSender.sendMessageItem(biliBiliDynamic: BiliBiliDynamic) {
         Bot.instances.forEach { bot ->
@@ -395,7 +403,6 @@ object GroupSender {
     @OptIn(ExperimentalSerializationApi::class)
     suspend fun GroupSender.sendMessage(biliBiliDynamic: BiliBiliDynamic) {
 
-        println(biliBiliDynamic.data?.cards?.get(0)?.desc?.type)
         //转发
         if (biliBiliDynamic.data?.cards?.get(0)?.desc?.type == 1) {
             if (!Setting.enable.forward) {
@@ -438,9 +445,10 @@ object GroupSender {
             if (!Setting.enable.dynamic) {
                 return
             }
+            println(biliBiliDynamic.data.cards[0])
             val biliBiliText = json.decodeFromString<BiliBiliText>(biliBiliDynamic.data.cards[0].card.toString())
 
-            sendMessage(biliBiliText)
+            sendMessage(biliBiliText, biliBiliDynamic.data.cards[0].desc?.dynamicIdStr!!)
             return
         }
         //文本+图片

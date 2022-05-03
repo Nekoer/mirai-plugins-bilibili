@@ -10,6 +10,7 @@ import net.mamoe.mirai.console.plugin.jvm.KotlinPlugin
 import net.mamoe.mirai.console.plugin.name
 import net.mamoe.mirai.event.globalEventChannel
 import net.mamoe.mirai.event.subscribeGroupMessages
+import net.mamoe.mirai.message.data.AtAll
 import net.mamoe.mirai.utils.info
 
 
@@ -17,7 +18,7 @@ object BiliBili : KotlinPlugin(
     JvmPluginDescription(
         id = "com.hcyacg.bilibili",
         name = "B站推送插件",
-        version = "1.1.4",
+        version = "1.1.4-dev-2",
     ) {
         author("Nekoer")
         info("""B站推送插件""")
@@ -46,6 +47,7 @@ object BiliBili : KotlinPlugin(
                     this
                 )
             }
+
         }
 
 
