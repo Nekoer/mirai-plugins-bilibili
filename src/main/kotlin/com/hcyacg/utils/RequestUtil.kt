@@ -1,7 +1,10 @@
 package com.hcyacg.utils
 
+import com.hcyacg.config.Setting
 import net.mamoe.mirai.utils.MiraiLogger
 import okhttp3.*
+import java.net.InetSocketAddress
+import java.net.Proxy
 import java.util.concurrent.TimeUnit
 
 /**
@@ -45,9 +48,19 @@ object RequestUtil {
      * 发送http请求，返回数据（其中根据proxy是否配置加入代理机制）
      */
     private fun httpObject(request: Request, logger: MiraiLogger): String? {
-        val response: Response = client.build().newCall(request).execute()
+        var response: Response = client.build().newCall(request).execute()
+        val host = Setting.proxy.host
+        val port = Setting.proxy.port
 
         try {
+
+            response = if (host.isBlank() || port == -1) {
+                client.build().newCall(request).execute()
+            } else {
+                val proxy = Proxy(Proxy.Type.HTTP, InetSocketAddress(host, port))
+                client.proxy(proxy).build().newCall(request).execute()
+            }
+
             if (response.isSuccessful) {
                 return response.body?.string()
             }

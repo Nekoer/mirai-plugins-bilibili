@@ -1,6 +1,9 @@
 package com.hcyacg.bilibili
 
 
+import com.hcyacg.BiliBili
+import com.hcyacg.BiliBili.reload
+import com.hcyacg.BiliBili.save
 import com.hcyacg.GroupSender
 import com.hcyacg.GroupSender.sendMessage
 import com.hcyacg.config.Data
@@ -9,11 +12,16 @@ import com.hcyacg.entity.*
 import com.hcyacg.utils.ImageUtil
 import com.hcyacg.utils.Method
 import com.hcyacg.utils.RequestUtil
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.withContext
 import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.json.Json
+import kotlinx.serialization.json.jsonArray
+import kotlinx.serialization.json.jsonObject
+import kotlinx.serialization.json.jsonPrimitive
 import net.mamoe.mirai.contact.nameCardOrNick
 import net.mamoe.mirai.event.events.GroupMessageEvent
 import net.mamoe.mirai.message.data.*
@@ -24,6 +32,7 @@ import okhttp3.*
 import okhttp3.internal.ignoreIoExceptions
 import org.apache.commons.lang3.StringUtils
 import java.util.*
+import java.util.regex.Pattern
 
 
 object BiliBiliCenter {
@@ -47,7 +56,10 @@ object BiliBiliCenter {
             override fun run() {
                 try {
                     Setting.ups.forEach { up ->
-                        logger.info("正在查看B站ID为 $up 的直播状态中")
+                        if (!Setting.ignoreLog) {
+                            logger.info("正在查看B站ID为 $up 的直播状态中")
+                        }
+
                         val result = RequestUtil.requestObject(
                             Method.GET, "$bilibiliLiveV2${up}&jsonp=jsonp",
                             requestBody, headers.build(),
@@ -98,7 +110,9 @@ object BiliBiliCenter {
             override fun run() {
                 try {
                     Setting.ups.forEach here@{ up ->
-                        logger.info("正在更新B站ID为 $up 的数据中")
+                        if (!Setting.ignoreLog) {
+                            logger.info("正在更新B站ID为 $up 的数据中")
+                        }
                         var upData = Data.dynamic[up]
 
                         requestBody = FormBody.Builder()
@@ -164,40 +178,46 @@ object BiliBiliCenter {
     @OptIn(ExperimentalSerializationApi::class)
     fun statistical(event: GroupMessageEvent) {
         runBlocking {
-            logger.info("正在统计监控列表")
+            if (!Setting.ignoreLog) {
+                logger.info("正在统计监控列表")
+            }
             event.subject.sendMessage(At(event.sender).plus("正在统计监控列表"))
             val nodes = mutableListOf<ForwardMessage.Node>()
 
             Setting.ups.forEach here@{ up ->
-                val result = RequestUtil.requestObject(
-                    Method.GET, "$bilibiliLiveV2${up}&jsonp=jsonp",
-                    requestBody, headers.build(),
-                    logger
-                )
-                val biliBiliLive = json.decodeFromString<BiliBiliLive>(result.toString())
-
-                if (biliBiliLive.data == null) {
-                    return@here
-                }
-
-                val toExternalResource =
-                    ImageUtil.getImage(biliBiliLive.data.face!!).toByteArray().toExternalResource()
-                val imageId: String = toExternalResource.uploadAsImage(event.group).imageId
-                toExternalResource.close()
-
-                val message: MessageChain = Image(imageId).plus("\n")
-                    .plus("等级: Lv.${biliBiliLive.data.level}").plus("\n")
-                    .plus("名字: ${biliBiliLive.data.name}").plus("\n")
-                    .plus("简介: ${biliBiliLive.data.sign}").plus("\n")
-
-                nodes.add(
-                    ForwardMessage.Node(
-                        senderId = event.bot.id,
-                        senderName = event.bot.nameCardOrNick,
-                        time = System.currentTimeMillis().toInt(),
-                        message = message
+                try {
+                    val result = RequestUtil.requestObject(
+                        Method.GET, "$bilibiliLiveV2${up}&jsonp=jsonp",
+                        requestBody, headers.build(),
+                        logger
                     )
-                )
+                    val biliBiliLive = json.decodeFromString<BiliBiliLive>(result.toString())
+
+                    if (biliBiliLive.data == null) {
+                        return@here
+                    }
+
+                    val toExternalResource =
+                        ImageUtil.getImage(biliBiliLive.data.face!!).toByteArray().toExternalResource()
+                    val imageId: String = toExternalResource.uploadAsImage(event.group).imageId
+                    toExternalResource.close()
+
+                    val message: MessageChain = Image(imageId).plus("\n")
+                        .plus("等级: Lv.${biliBiliLive.data.level}").plus("\n")
+                        .plus("名字: ${biliBiliLive.data.name}").plus("\n")
+                        .plus("简介: ${biliBiliLive.data.sign}").plus("\n")
+
+                    nodes.add(
+                        ForwardMessage.Node(
+                            senderId = event.bot.id,
+                            senderName = event.bot.nameCardOrNick,
+                            time = System.currentTimeMillis().toInt(),
+                            message = message
+                        )
+                    )
+                } catch (e: Exception) {
+                    e.printStackTrace()
+                }
             }
 
             //合并QQ消息 发送查询到的图片线索
@@ -212,6 +232,44 @@ object BiliBiliCenter {
             })
 
             event.subject.sendMessage(forward)
+        }
+    }
+
+    val upName = Pattern.compile("(?i)^(up添加).+\$")
+    val upNum = Pattern.compile("(?i)^(up添加)([0-9]*[1-9][0-9]*)\$")
+
+    suspend fun addUp(event: GroupMessageEvent) {
+        try {
+            if (upNum.matcher(event.message.contentToString()).find()) {
+                val num = event.message.contentToString().replace("up添加", "");
+                Setting.ups.add(num)
+                Setting.save()
+                Setting.reload()
+
+                event.subject.sendMessage("已添加Up ID $num")
+            } else {
+                val name = event.message.contentToString().replace("up添加", "")
+
+                val data = RequestUtil.requestObject(
+                    Method.GET,
+                    "https://api.bilibili.com/x/web-interface/search/type?page=1&page_size=36&keyword=$name&search_type=bili_user&dynamic_offset=0",
+                    null,
+                    Headers.Builder().build(),
+                    BiliBili.logger
+                )
+                val temp = json.parseToJsonElement(data!!)
+                val num =
+                    temp.jsonObject["data"]?.jsonObject?.get("result")?.jsonArray?.get(0)?.jsonObject?.get("mid")?.jsonPrimitive?.content
+
+                Setting.ups.add("$num")
+                Setting.save()
+                Setting.reload()
+
+                event.subject.sendMessage("已添加Up ID $num")
+
+            }
+        } catch (e: Exception) {
+            e.printStackTrace()
         }
     }
 }

@@ -109,9 +109,9 @@ object GroupSender {
 
                         if (Setting.enable.video_At_All) {
                             group.sendMessage(AtAll.plus(message))
-                            return
+                        } else {
+                            group.sendMessage(message)
                         }
-                        group.sendMessage(message)
                     } catch (e: SendMessageFailedException) {
                         group.sendMessage(message)
                     } catch (e: Exception) {

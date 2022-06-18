@@ -1,9 +1,15 @@
 package com.hcyacg
 
 
+import com.hcyacg.BiliBili.save
 import com.hcyacg.bilibili.BiliBiliCenter
 import com.hcyacg.config.Data
 import com.hcyacg.config.Setting
+import com.hcyacg.utils.Method
+import com.hcyacg.utils.RequestUtil
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
+import kotlinx.serialization.json.*
 import net.mamoe.mirai.console.extension.PluginComponentStorage
 import net.mamoe.mirai.console.plugin.jvm.JvmPluginDescription
 import net.mamoe.mirai.console.plugin.jvm.KotlinPlugin
@@ -12,18 +18,21 @@ import net.mamoe.mirai.event.globalEventChannel
 import net.mamoe.mirai.event.subscribeGroupMessages
 import net.mamoe.mirai.message.data.AtAll
 import net.mamoe.mirai.utils.info
+import okhttp3.Headers
+import java.util.regex.Pattern
 
 
 object BiliBili : KotlinPlugin(
     JvmPluginDescription(
         id = "com.hcyacg.bilibili",
         name = "B站推送插件",
-        version = "1.1.4-dev-2",
+        version = "1.1.5",
     ) {
         author("Nekoer")
         info("""B站推送插件""")
     }
 ) {
+
 
     override fun PluginComponentStorage.onLoad() {
         Data.save()
@@ -48,8 +57,21 @@ object BiliBili : KotlinPlugin(
                 )
             }
 
+
+            val upName = Pattern.compile("(?i)^(up添加).+\$")
+            val upNum = Pattern.compile("(?i)^(up添加)([0-9]*[1-9][0-9]*)\$")
+            //https://api.bilibili.com/x/web-interface/search/type?page=1&page_size=36&keyword=%E8%8A%B1%E8%88%9E&search_type=bili_user&dynamic_offset=0
+            content { upName.matcher(message.contentToString()).find() } reply {
+                BiliBiliCenter.addUp(this)
+            }
+
         }
 
 
+    }
+
+    override fun onDisable() {
+        Setting.save()
+        Data.save()
     }
 }
