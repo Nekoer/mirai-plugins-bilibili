@@ -1,15 +1,10 @@
 package com.hcyacg
 
 
-import com.hcyacg.BiliBili.save
+
 import com.hcyacg.bilibili.BiliBiliCenter
 import com.hcyacg.config.Data
 import com.hcyacg.config.Setting
-import com.hcyacg.utils.Method
-import com.hcyacg.utils.RequestUtil
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.withContext
-import kotlinx.serialization.json.*
 import net.mamoe.mirai.console.extension.PluginComponentStorage
 import net.mamoe.mirai.console.plugin.jvm.JvmPluginDescription
 import net.mamoe.mirai.console.plugin.jvm.KotlinPlugin
@@ -26,7 +21,7 @@ object BiliBili : KotlinPlugin(
     JvmPluginDescription(
         id = "com.hcyacg.bilibili",
         name = "B站推送插件",
-        version = "1.1.5",
+        version = "1.1.5-fix",
     ) {
         author("Nekoer")
         info("""B站推送插件""")

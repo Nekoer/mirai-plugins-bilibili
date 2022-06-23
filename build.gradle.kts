@@ -2,14 +2,14 @@ plugins {
     val kotlinVersion = "1.6.10"
     kotlin("jvm") version kotlinVersion
     kotlin("plugin.serialization") version kotlinVersion
-    id("net.mamoe.mirai-console") version "2.11.0-RC"
+    id("net.mamoe.mirai-console") version "2.12.0-RC"
     id("me.him188.maven-central-publish") version "1.0.0-dev-3"
 
 
 }
 
 group = "com.hcyacg"
-version = "1.1.5"
+version = "1.1.5-fix"
 
 repositories {
     mavenCentral()

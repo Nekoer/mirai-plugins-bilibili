@@ -48,13 +48,11 @@ object RequestUtil {
      * 发送http请求，返回数据（其中根据proxy是否配置加入代理机制）
      */
     private fun httpObject(request: Request, logger: MiraiLogger): String? {
-        var response: Response = client.build().newCall(request).execute()
-        val host = Setting.proxy.host
-        val port = Setting.proxy.port
-
         try {
+            val host = Setting.proxy.host
+            val port = Setting.proxy.port
 
-            response = if (host.isBlank() || port == -1) {
+            val response = if (host.isBlank() || port == -1) {
                 client.build().newCall(request).execute()
             } else {
                 val proxy = Proxy(Proxy.Type.HTTP, InetSocketAddress(host, port))
@@ -64,12 +62,12 @@ object RequestUtil {
             if (response.isSuccessful) {
                 return response.body?.string()
             }
+
+            response.close()
             return null
         } catch (e: Exception) {
-            logger.error(e.message)
+            e.printStackTrace()
             return null
-        } finally {
-            response.close()
         }
     }
 }
