@@ -1,5 +1,5 @@
 plugins {
-    val kotlinVersion = "1.6.10"
+    val kotlinVersion = "1.6.21"
     kotlin("jvm") version kotlinVersion
     kotlin("plugin.serialization") version kotlinVersion
     id("net.mamoe.mirai-console") version "2.12.0-RC"
@@ -9,7 +9,7 @@ plugins {
 }
 
 group = "com.hcyacg"
-version = "1.1.5-fix"
+version = "1.1.6"
 
 repositories {
     mavenCentral()
@@ -48,11 +48,11 @@ mavenCentralPublish {
     artifactId = "BiliBili"
     groupId = "com.hcyacg"
     projectName = "mirai plugins bilibili"
-    workingDir = rootProject.buildDir.resolve("pub").apply { mkdirs() }
+    //workingDir = rootProject.buildDir.resolve("pub").apply { mkdirs() }
     // description from project.description by default
     useCentralS01()
-    githubProject("Nekoer", "mirai-plugins-bilibili")
-    licenseFromGitHubProject("licenseAGPL-3.0", "master")
+    singleDevGithubProject("Nekoer", "mirai-plugins-bilibili")
+    licenseFromGitHubProject("AGPL-3.0", "master")
     publication {
         artifact(tasks.getByName("buildPlugin"))
         artifact(tasks.getByName("buildPluginLegacy"))

@@ -127,11 +127,11 @@ data class Origin(
     @SerialName("like")
     val like: Int? = 0,
     @SerialName("orig_dy_id")
-    val origDyId: Int? = 0,
+    val origDyId: Long? = 0,
     @SerialName("orig_dy_id_str")
     val origDyIdStr: String? = "",
     @SerialName("pre_dy_id")
-    val preDyId: Int? = 0,
+    val preDyId: Long? = 0,
     @SerialName("pre_dy_id_str")
     val preDyIdStr: String? = "",
     @SerialName("r_type")
